@@ -30,7 +30,7 @@
 
         <!-- 内容区 -->
         <Card>
-          <div style="height: 600px">
+          <div style="height: 760px">
             <router-view/>
           </div>
         </Card>

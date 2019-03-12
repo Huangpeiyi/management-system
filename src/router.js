@@ -8,12 +8,15 @@ import GoodsList from './views/goods/GoodsList.vue'
 import CategoryList from './views/category/CategoryList.vue'
 import MemberList from './views/member/MemberList.vue'
 import OrderList from './views/order/OrderList.vue'
+import Login from './views/Login.vue'
+
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    { path: "/", redirect: "/admin" },
+    { path: "/", redirect: "/login" },
+    {path:"/login",component:Login,meta:"登录页"},
     {
       path: '/admin',
       name: 'Admin',
