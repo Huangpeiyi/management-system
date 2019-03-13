@@ -15,7 +15,7 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    { path: "/", redirect: "/login" },
+    { path: "/", redirect: "/admin" },
     {path:"/login",component:Login,meta:"登录页"},
     {
       path: '/admin',

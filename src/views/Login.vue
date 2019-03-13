@@ -68,8 +68,13 @@ export default {
       //         this.$router.back();
       //     }
       // })
-      this.$store.dispatch('user/login',this.formData).then(()=>{
-        this.$router.back();
+      this.$store.dispatch('user/login',this.formData).then(()=>{        
+        this.$Message.success('登录成功');
+        setTimeout(()=>{
+          this.$router.push("/admin");
+        },200);
+      }).catch(()=>{
+        this.$Message.error('登录不成功');
       });
      
     },

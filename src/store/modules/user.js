@@ -17,32 +17,65 @@ export default {
   },
   //异步修改数据
   actions: {
-    login({commit,state}, data){
-        return new Promise((resolve,reject)=>{
-            axios({
-                method:"POST",
-                url:`/admin/account/login`,         
-                data,
-                //处理跨域
-                withCredentials:true,
-            }).then(res=>{
-                const {status,message} = res.data;
-                if(status==1){
-                    //登录失败
-                    this.$Message.error('登录不成功');
-                }else{
-                    //把接口返回的值更新到store下的数据
-                    state.username=message.uname;
-                    state.identity=message.realname;
+    login({
+      commit,
+      state
+    }, data) {
+      return new Promise((resolve, reject) => {
+        axios({
+          method: "POST",
+          url: `/admin/account/login`,
+          data,
+          //处理跨域
+          withCredentials: true,
+        }).then(res => {
+          const {
+            status,
+            message
+          } = res.data;
+          if (status == 1) {
+            //登录失败
+            reject();
+          } else {
+            //把接口返回的值更新到store下的数据
+            state.username = message.uname;
+            state.identity = message.realname;
 
-                    //把用户信息存储到本地
-                    localStorage.setItem("username",message.uname);
-                    localStorage.setItem("identity",message.realname);
+            //把用户信息存储到本地
+            localStorage.setItem("username", message.uname);
+            localStorage.setItem("identity", message.realname);
 
-                    resolve();
-                }
-            })
-        });
+
+
+            resolve();
+          }
+        })
+      });
+    },
+    logout({
+      state
+    }, fn) {
+      //调用退出接口
+      axios({
+        method: "get",
+        url: `/admin/account/logout`,
+      }).then(res => {
+        console.log(res.data);
+        const {
+          status,
+          message
+        } = res.data;
+        if (status == 0) {
+          //把接口返回的值更新到store下的数据
+          state.username = "";
+          state.identity = "";
+
+           //把用户信息存储到本地
+           localStorage.removeItem("username");
+           localStorage.removeItem("identity");
+           fn();
+        }
+      })
     }
   }
 }

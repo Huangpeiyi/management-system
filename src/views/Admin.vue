@@ -10,15 +10,17 @@
           </template>
           <MenuItem :name="`${index +1}`-`${subIndex +1}`" v-for="(subItem,subIndex) in item.group" :key="`${subIndex +1}`">
             <router-link :to="subItem.src" class="meauBtn">{{subItem.title}}</router-link>
-          </MenuItem>
-          
+          </MenuItem>          
         </Submenu>
       </Menu>
     </Sider>   
     <!-- 右侧 -->
     <Layout :style="{marginLeft: '200px'}">
       <!-- 头部 -->
-      <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}"></Header>
+      <Header :style="{background: '#fff', boxShadow: '0 2px 3px 2px rgba(0,0,0,.1)'}">
+        <b style="font-size:14px;">{{username}}{{identity}}</b>
+        <Button style="float:right;margin-top:16px;" @click="handleLogout">退出登录</Button>
+      </Header>
 
       <Content :style="{padding: '0 16px 16px'}">
         <!-- 面包屑导航 -->
@@ -39,6 +41,7 @@
   </div>
 </template>
 <script>
+import {mapState} from "vuex"
 export default {
   data() {
     return {
@@ -78,7 +81,20 @@ export default {
               };
           })
           return newArr;
-      }
+      },
+      //头部获取store的值
+      ...mapState("user",{
+        username:"username",
+        // 身份信息
+        identity:"identity",
+      })
+  },
+  methods:{
+    handleLogout(){
+      this.$store.dispatch("user/logout",()=>{
+        this.$router.push("/login");
+      })
+    }
   }
 };
 </script>

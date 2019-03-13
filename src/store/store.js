@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
+
 // 引入用户user.js的数据
 import user from "./modules/user"
 
